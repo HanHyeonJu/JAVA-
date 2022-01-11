@@ -1,0 +1,9 @@
+# 저장할 필요없는 파일이나 폴더를 지정
+.metadata/
+.settings/
+bin/
+.classpath
+.project
+*/build/
+#확장자 txt파일은 깃으로 저장하지 않음
+*.txt
