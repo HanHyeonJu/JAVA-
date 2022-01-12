@@ -10,7 +10,7 @@
 	<h1>홈페이지</h1>
 	
 	<!-- request.getContextPath를 써주는게 context가 바뀌어도 실행할 수 있게 해주기 때문에 그냥 context를 써는 것 보다 좋음  -->
-	<%-- 서버/MVC2/로 검색가능 --%>
+	<%-- /서버/MVC2/(Contest)/로 검색가능 --%>
 	<p><a href = "<%=request.getContextPath() %>/Controller?action=login">로그인</a>
 	<p><a href = "<%=request.getContextPath() %>/Controller?action=about">어바웃</a>
 </body>
