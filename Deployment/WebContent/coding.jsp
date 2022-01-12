@@ -13,7 +13,7 @@
 
 <%
 String id = request.getParameter("id");
-if(id == null) {
+if(id == null) { 
 %>
 <p> id가 입력되지 않았습니다. </p>
 <% } else{ %>
