@@ -47,6 +47,7 @@ public class Controller extends HttpServlet {
 			return;
 		}
 		
+		// Connection 객체가 없으면 DB를 사용할 수 없음
 		Connection conn = null;
 		
 		try {
@@ -73,7 +74,7 @@ public class Controller extends HttpServlet {
 					request.getRequestDispatcher("/login.jsp").forward(request, response);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				e.printStackTrace(); // 에러가 왜 발생했는지 console창에 이유를 출력해주게 함
 				request.setAttribute("message", "DB 에러 발생");
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 			}
