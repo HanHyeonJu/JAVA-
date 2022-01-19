@@ -94,7 +94,7 @@ public class Controller extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String repeatPassword = request.getParameter("repeatpassword");
-			request.setAttribute("email", email); // 이메일 정보를 request에 저장(?)
+			request.setAttribute("email", email); // 이메일 정보를 request에 저장 => 다시 치기 편하게 하려고
 			
 			//확인패스워드가 입력패스워드와 같지 않을경우와 입력한 아이디와 패스워드가 유효성 검사에 불합격했을 경우
 			if(!password.equals(repeatPassword)) {
@@ -111,7 +111,7 @@ public class Controller extends HttpServlet {
 				}
 				else { // 유효성 검사 통과 => 이메일 중복확인 => 새 계정 만들기
 					try {
-						if(account.exists(email)) {
+						if(account.exists(email)) { // exists가 true로 리턴된 경우
 							//같은 이메일이 DB에 있을경우
 							request.setAttribute("message", "이미 가입된 이메일이 있습니다.");
 							request.getRequestDispatcher("/createaccount.jsp").forward(request, response);

@@ -48,16 +48,18 @@ public class Account {
 		
 		int count = 0;
 		
+		// 당연히 이메일은 각각 하나밖에 없을 거니까 한 줄만 결과로 출력됨 그래서 if문을 사용해줌 여러 줄일 경우에는 while문을 사용한다고 함
+		// 결과가 출력되는 경우 count를 0에서 받은 count값으로 덮어씌어줌
 		if(rs.next()) {
 			count = rs.getInt("count");
 		}
 		
-		rs.close();
+		rs.close(); // 닫아줘야함
 		
 		if(count == 0) {
-			return false;
+			return false; // false면 등록된 이메일이 없다
 		}else {
-			return true;
+			return true; // true면 등록된 이메일이 있다
 		}
 	}
 
@@ -72,4 +74,4 @@ public class Account {
 		
 		pstmt.close();
 	}
-}//?????
+}
