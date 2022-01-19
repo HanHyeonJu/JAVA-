@@ -1,0 +1,85 @@
+body, html { 
+	height: 100%
+}
+
+.headerWrapper {
+	margin: -5px -5px 0 -5px;
+	background-color: red;
+	text-align: center;
+}
+
+.header {
+	position: relative;
+	margin: 0 auto;
+	display: block;
+	height: 40px;
+	width: 100%;
+	text-align: left;
+}
+
+.content {  
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.container {
+  width: 60%;
+  height: 70%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.heading {
+      text-align: center;
+      margin-bottom: 10px;
+}
+
+.rating {
+  font-size: 1.25em;
+  color: coral;
+  font-weight: bold;
+}
+
+ h1 {
+      margin-bottom: 0;
+}
+
+.imageby {
+      color: gray;
+      font-style: italic;
+      margin: 5px;
+}
+
+.flex-box {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+}
+
+.picture {
+      flex: 7;
+      text-align: center;
+}
+
+.picture img {
+      max-width: 90%;
+      max-height: 90%;
+}    
+
+.rating-radio {
+      flex: 3;
+}    
+
+#footer {
+	position: relative;
+	top: 200px;
+	width: 90%;
+	background-color: white;
+	text-align: left;
+	border-top: 1px solid gray;
+	height: 30px;
+	margin-left: 5%;
+	font-size: 11px;
+	color: gray;
+}

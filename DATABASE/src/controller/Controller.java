@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import beans.User;
+
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,6 +35,15 @@ public class Controller extends HttpServlet {
 			request.setAttribute("password", "");
 			request.setAttribute("message", "");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
+		else if(action.equals("createaccount")) {
+			request.setAttribute("email", "");
+			request.setAttribute("password", "");
+			request.setAttribute("message", "");
+			request.getRequestDispatcher("/createaccount.jsp").forward(request, response);
+		}else {
+			out.println("없는 액션입니다.");
+			return;
 		}
 	}
 	
@@ -79,7 +90,44 @@ public class Controller extends HttpServlet {
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 			}
 		}
-		
+		else if(action.equals("createaccount")) {
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String repeatPassword = request.getParameter("repeatpassword");
+			request.setAttribute("email", email); // 이메일 정보를 request에 저장(?)
+			
+			//확인패스워드가 입력패스워드와 같지 않을경우와 입력한 아이디와 패스워드가 유효성 검사에 불합격했을 경우
+			if(!password.equals(repeatPassword)) {
+				request.setAttribute("message", "패스워드가 틀립니다.");
+				request.getRequestDispatcher("/createaccount.jsp").forward(request, response);
+			}
+			else {
+				// 유효성검사를 위해 User클래스를 객체로 불러옴				
+				User user = new User(email, password);
+				if(!user.validate()) {
+					// 이메일 또는 패스워드가 validate()형식에 맞지 않음(유효성검사 탈락)
+					request.setAttribute("message", user.getMessage());
+					request.getRequestDispatcher("/createaccount.jsp").forward(request, response);
+				}
+				else { // 유효성 검사 통과 => 이메일 중복확인 => 새 계정 만들기
+					try {
+						if(account.exists(email)) {
+							//같은 이메일이 DB에 있을경우
+							request.setAttribute("message", "이미 가입된 이메일이 있습니다.");
+							request.getRequestDispatcher("/createaccount.jsp").forward(request, response);
+						}
+						else {
+							// 새계정을 만든다
+							account.create(email, password);
+							request.getRequestDispatcher("/createsuccess.jsp").forward(request, response);
+						}
+					} catch (SQLException e) { // SQL 에러가 발생했을 경우
+						request.setAttribute("message", "SQL 에러 발생");
+						request.getRequestDispatcher("/error.jsp").forward(request, response);
+					}
+				}
+			}
+		}
 		try {
 			conn.close(); // 실제로는 conn을 닫는 것 대신에 커넥션을 커넥션 풀로 보냄, 다른 DB요청이 왔을 때 다른 DB를 꺼낼 수 있도록 하기 위함
 		} catch (SQLException e) {
@@ -87,5 +135,4 @@ public class Controller extends HttpServlet {
 		}
 	}
 	
-
 }

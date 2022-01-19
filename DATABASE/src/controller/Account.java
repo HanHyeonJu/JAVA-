@@ -38,4 +38,38 @@ public class Account {
 		if(count == 0) return false; // count의 값이 없으면 false 있으면 true를 return
 		else return true;
 	}
-}
+
+	public boolean exists(String email) throws SQLException {
+		String sql = "select count(*) as count from users where email=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, email);
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		int count = 0;
+		
+		if(rs.next()) {
+			count = rs.getInt("count");
+		}
+		
+		rs.close();
+		
+		if(count == 0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	public void create(String email, String password) throws SQLException {
+		String sql = "insert into users(email,password) values (?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, email);
+		pstmt.setString(2, password);
+		
+		pstmt.executeUpdate(); // 결과 rs는 입력, 수정, 삭제의 경우에는 없음, executeUpdate() 사용
+		
+		pstmt.close();
+	}
+}//?????
