@@ -10,12 +10,13 @@
 	<c:param name="title" value="단독이미지"></c:param>
 </c:import>
 
-<!-- jstl에 들어가는 데이터소스와 context.xml에 들어간 데이터소스는 같아야함 -->
-<sql:setDataSource var="ds" dataSource="jdbc/webshop" />
+<!-- 트랜잭션(동시에 많은 사람들이 평점을 매길 때 업데이트가 이상하게 샐행되는 것을 방지)을 사용하고 싶을 때 데이터소스 설정  -->
+<!-- 트랜젝션 처리를 하면 알아서 데이터소스를 처리해주기 때문에 변수 "ds"가 필요없음 -->
+<sql:transaction dataSource="jdbc/webshop">
 
 <!-- 아이디별로 사진 검색  -->
 <!-- results를 배열이라고 생각 -->
-<sql:query var="results" dataSource="${ds}" sql="select * from images where id=?" >
+<sql:query var="results" sql="select * from images where id=?" >
 	<sql:param>${param.image}</sql:param>
 </sql:query>
 
@@ -39,12 +40,13 @@
 
 	<c:set scope="page" var="average_ranking" value="${newRating}" />
 
-	<sql:update dataSource="${ds}" sql="update images set average_ranking=?, rankings=? where id=?" >
+	<sql:update sql="update images set average_ranking=?, rankings=? where id=?" >
 	<sql:param>${newRating}</sql:param>
 	<sql:param>${image.rankings+1}</sql:param>
 	<sql:param>${param.image}</sql:param>
 	</sql:update>
 </c:if>
+</sql:transaction>
 
  <div class="container">
    <div class="heading">
