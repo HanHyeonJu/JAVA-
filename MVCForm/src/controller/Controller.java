@@ -17,7 +17,7 @@ public class Controller extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		// 저장되어 있는 이메일/패스워드/메시지를 초기ㅗ하 =>  로그인 정보는 post로 가기 때문에 get에서는 초기화 불가능		
+		// 저장되어 있는 이메일/패스워드/메시지를 초기화 =>  로그인 정보는 post로 가기 때문에 get에서는 초기화 불가능		
 		request.setAttribute("email", ""); // null값으로 표현되지 않도록 하기 위해서 설정
 		request.setAttribute("password", "");
 		request.setAttribute("valmessage", "");
