@@ -1,5 +1,5 @@
 package todoApp.model;
-
+// 가입할 때 사용할 자바빈 객체
 public class User {
 	private String firstName;
 	private String lastName;
