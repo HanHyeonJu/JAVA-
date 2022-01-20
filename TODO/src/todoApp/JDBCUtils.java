@@ -14,11 +14,15 @@ public class JDBCUtils {
     private static String jdbcUsername = "root";
     private static String jdbcPassword = "1234";
     
+    public static void main(String[] args) {
+		Connection conn = getConnection();
+	}
+    
     public static Connection getConnection() {
     	Connection conn = null;
     	
     	try {
-			Class.forName("con.mysql.jdbc.Driver");	 //0
+			Class.forName("com.mysql.jdbc.Driver");	 //0
 			conn = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 클래스 못찾음"); // jar파일 찾지 못함
@@ -27,6 +31,7 @@ public class JDBCUtils {
 		}
     	
     	// DB연결 성공
+    	System.out.println("DB연결 성공");
     	return conn; // DB에 연결하여 커넥션을 받아옴
     }
     

@@ -7,7 +7,7 @@ public class User {
 	private String password;
 	
 	public User() {
-		// 기본 생성자는 자바 반응용으로 필요
+		// 기본 생성자는 자바 반응용으로 필요(자바빈용)
 	}
 
 	public User(String firstName, String lastName, String userName, String password) {

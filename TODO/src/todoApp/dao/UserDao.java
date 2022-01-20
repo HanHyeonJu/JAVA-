@@ -12,12 +12,12 @@ public class UserDao {
 	// 유저 입력 => DB에 유저데이터를 입력
 	public int registerUser(User user) { // 결과가 true면 1 return 아니면 0 이하
 		String INSERT_USER_SQL = "INSERT INTO users(firstName, lastName, userName, password)"
-				+ "values('?','?','?','?');";
+				+ "values(?,?,?,?);";
 		
 		int result = 0;
 		
-		Connection conn = JDBCUtils.getConnection();
 		try {
+			Connection conn = JDBCUtils.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(INSERT_USER_SQL);
 			pstmt.setString(1, user.getFirstName());
 			pstmt.setString(2, user.getLastName());
