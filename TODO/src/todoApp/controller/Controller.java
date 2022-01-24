@@ -43,6 +43,9 @@ public class Controller extends HttpServlet {
 		int result = userDao.registerUser(user);
 		if(result == 1) {
 			System.out.println("회원 등록 완료!");
+			request.setAttribute("MESSAGE", "회원등록 완료!");
+		} else {
+			request.setAttribute("MESSAGE", "회원등록 실패!");
 		}
 		// 화면을 보여주기(register.html 페이지를 보여주기)
 		//request.getRequestDispatcher("register.jsp").forward(request, response);

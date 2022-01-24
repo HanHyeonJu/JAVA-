@@ -7,7 +7,7 @@ public class User {
 	private String password;
 	
 	public User() {
-		// 기본 생성자는 자바 반응용으로 필요(자바빈용)
+		// 기본 생성자는 자바 반응용으로 필요(자바빈용)-setAttribute를 사용하려면 필수, DB에 저장되어 있는 데이터가 없을 때 필요
 	}
 
 	public User(String firstName, String lastName, String userName, String password) {

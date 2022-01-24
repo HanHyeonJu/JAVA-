@@ -13,7 +13,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/login/login.jsp">로그인</a></li>
+					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/login">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath() %>/register/register.jsp">가입하기</a></li>
 				</ul>
 			</div>
