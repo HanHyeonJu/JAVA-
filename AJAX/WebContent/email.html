@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "KO">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AJAX 연습</title>
+  </head>
+  <body>
+    <h1>회원 가입시 이메일 중복 체크</h1>
+   <form name="myform">
+   	<input type="email" name="email" placeholder="이메일 입력"/>
+   	<input type="button" onclick="sendServer()" value="중복체크"/>
+   	<div id="output"></div>
+   </form>
+ 	
+    <script>
+      const input = document.querySelector('input[type="email"]'); // 타입 태그로 찾음
+      const output = document.getElementById('output');
+      const request = new XMLHttpRequest(); // ajax의 객체 생성
+
+      // input.addEventListener('keyup', sendServer);
+      
+      function sendServer() {
+    	//input태그에 아이디를 입력하면 이벤트 keyup 일때 AJAX 서버로 GET 요청 (id)
+        let email = input.value;
+        let url = 'emailCheck.jsp?email=' + email; // 요청할 서버의 jsp 페이지 주소
+        request.open('GET', url, true);
+        request.send();
+        request.onreadystatechange = getInfo;
+      }
+      
+      function getInfo() {
+          if (request.readyState == 4 && request.status == 200) {
+            let info = request.responseText; // info?
+            output.textContent = info;
+          } 
+        };
+    </script>
+  </body>
+</html>
