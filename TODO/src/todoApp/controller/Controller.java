@@ -19,8 +19,8 @@ public class Controller extends HttpServlet {
 	private UserDao userDao;
       
 	@Override
-	public void init() throws ServletException {
-		// 서블릿이 만들어 질때 한 번 실행
+	public void init() {
+		// 서블릿이 만들어 질때 한 번 실행(여러 번 만들어지는 거 방지)
 		userDao = new UserDao();
 	}
 

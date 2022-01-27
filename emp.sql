@@ -19,7 +19,10 @@ CREATE TABLE `members` (
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
-
-
-select * from members;
-
+DROP TABLE IF EXISTS comment; 
+CREATE TABLE comment(
+	id INT NOT NULL auto_increment, # 자동으로 1씩 증가
+	comment TEXT DEFAULT NULL, # 긴 문자열
+    email VARCHAR(255) DEFAULT NULL,
+    primary key(id)
+);

@@ -30,7 +30,7 @@
       
       function getInfo() {
           if (request.readyState == 4 && request.status == 200) {
-            let info = request.responseText; // info?
+            let info = request.responseText; // 응답받은 데이터를 변수로 저장
             output.textContent = info;
           } 
         };
