@@ -1,0 +1,16 @@
+CREATE DATABASE demo
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
+
+use demo;
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE contacts (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  phone VARCHAR(15) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+

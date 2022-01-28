@@ -26,3 +26,6 @@ CREATE TABLE comment(
     email VARCHAR(255) DEFAULT NULL,
     primary key(id)
 );
+
+select * from demo.comment;
+
