@@ -1,3 +1,6 @@
-body{
-	background-color : white;
+table tbody td {
+  /* 단어를 붙여서 표시 !important는 무조건 적용시킴(부트스트랩이 같이 있어서 부트스트랩과 겹쳤을 때 우선순위로 두기 위해서 사용) */
+  word-break: keep-all !important;
+  /* 테이블 안의 td 안에 내용을 세로 가운데 정렬 */
+  vertical-align: middle !important;
 }

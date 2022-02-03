@@ -89,13 +89,14 @@ public class ContactDao {
 		
 		try {
 			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement("insert into contacts (name, email, phone) values (?,?,?)");
+			pstmt = conn.prepareStatement("insert into contacts (name, email, phone) values (?, ?, ?)");
 			pstmt.setString(1, contact.getName());
 			pstmt.setString(2, contact.getEmail());
 			pstmt.setString(3, contact.getPhone());
-			
-			rowAffected = pstmt.executeUpdate() > 0; // 한 줄이상 sql문이 업데이트되면 true
+
+			rowAffected = pstmt.executeUpdate() > 0;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("시스템 에러");
 			return false;
 		} finally {
