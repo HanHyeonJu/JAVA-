@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import dao.ContactDao;
 import model.Contact;
+import utills.Json;
 
 @WebServlet("/contact")
 public class ContactController extends HttpServlet {
@@ -46,7 +47,7 @@ public class ContactController extends HttpServlet {
 		case "update": // 실제 수정하기
 			update(req, res);
 			break;
-		case "del": // 삭제하기
+		case "delete": // 삭제하기
 			delete(req, res);
 			break;
 		default: // 전체 연락처를 화면에 테이블로 표시
@@ -65,18 +66,40 @@ public class ContactController extends HttpServlet {
 	}
 
 	private void delete(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-
+		int id = Integer.parseInt(req.getParameter("id")); // 아이디 가져옴
+		
+		boolean isDeleted = contactDao.delete(id);
+		
+		if(isDeleted) {
+			System.out.println("삭제 완료!");
+			new Json(res).sendMessage(true, "연락처 삭제됨");
+		}
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-
+		Contact contact = new Contact();
+		
+		contact.setId(Integer.parseInt(req.getParameter("id")));
+		contact.setName(req.getParameter("name"));
+		contact.setEmail(req.getParameter("email"));
+		contact.setPhone(req.getParameter("phone"));
+		
+		boolean isUpdated = contactDao.update(contact); // 결과가 참이면 DB에 저장
+		
+		if(isUpdated) {
+			System.out.println("수정 완료!");
+			new Json(res).sendMessage(true, "연락처 수정됨"); // ajax 사용할 때
+		}
 	}
 
 	private void edit(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-
+		int id = Integer.parseInt(req.getParameter("id")); // 문자열 id를 정수 변환(파라메터는 다 문자열로 받기 때문)
+		
+		Contact contact = contactDao.find(id); // id로 연락처 객체 찾기
+		if(contact != null) { // id로 찾았을 때 contact 객체가 있다면
+			System.out.println("찾기 완료!");
+			new Json(res).sendContact(contact);
+		}
 	}
 
 	private void save(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -87,11 +110,12 @@ public class ContactController extends HttpServlet {
 		
 		boolean isSaved = contactDao.save(contact); // 결과가 참이면 DB에 저장
 		
-		if(isSaved) {
+		if(isSaved) { // DB에 성공적으로 저장이 되었다면
 			System.out.println("입력완료!");
+			new Json(res).sendMessage(true, "연락처 입력"); // ajax 사용할 때
 		}
 		
-		list(req, res); // 다시 리스트 화면 출력
+		//list(req, res); // 다시 리스트 화면 출력(ajax를 사용하지 않을 때)
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

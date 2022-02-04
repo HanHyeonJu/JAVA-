@@ -14,7 +14,8 @@
         <th>이름</th>
         <th>이메일</th>
         <th>연락처</th>
-        <th width="5%">&nbsp;</th> <!-- 줄 바꿈 없는 공백처리(수정, 삭제 td의 th를 공백으로 표시) -->
+        <th width="5%">&nbsp;</th>
+        <!-- 줄 바꿈 없는 공백처리(수정, 삭제 td의 th를 공백으로 표시) -->
         <th width="5%">&nbsp;</th>
       </tr>
     </thead>
@@ -38,7 +39,7 @@
   </table>
 </div>
 <!-- 아래는 모달(팝업)창 html -->
-<div class="modal fade" id="modal-add-update" tabindex="-1" aria-labelledby="addUpdateLabel" aria-hidden="true"> 
+<div class="modal fade" id="modal-add-update" tabindex="-1" aria-labelledby="addUpdateLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -47,7 +48,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form autocomplete="off" method="post">
+      <form id="add-update" autocomplete="off">
         <div class="modal-body">
           <div class="form-group">
             <label for="name">name</label>
@@ -65,7 +66,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success btn-action">저장</button> <!-- contactController로 감 -->
+          <button type="submit" class="btn btn-success btn-action">저장</button>
+          <!-- contactController로 감 -->
           <button type="button" class="btn btn-secondary btn-action" data-dismiss="modal">취소</button>
         </div>
       </form>
