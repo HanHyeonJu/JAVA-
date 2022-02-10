@@ -10,4 +10,4 @@ phone varchar(15) not null,
 primary key(id)
 );
 
-
+select * from demo.contacts;

@@ -33,7 +33,7 @@ public class Account {
 			count = rs.getInt("count"); // count열(count열이 뭐지?)의 값을 return(int형)
 		}
 		
-		rs.close(); // rs.close의 위치가 여기인 이유는?? true false 구분하고 종료해야 하는 거 아닌가?
+		rs.close(); 
 		
 		if(count == 0) return false; // count의 값이 없으면 false 있으면 true를 return
 		else return true;
