@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import beans.User;
+
 public class UserDAO {
 	private DataSource dataSource; // jdbc/demo 커넥션 풀 연결 객체
 	private Connection conn;
@@ -45,6 +47,54 @@ public class UserDAO {
 		
 		return -2; // DB오류(DB연결 중에 오류가 생긴 경우)
 	}
+	
+	public int existID(String userID) {
+		int result = -1;  
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("select userID from user where userID=?");
+			pstmt.setString(1, userID);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result=1; // 아이디가 존재하면 1
+			}else {
+				result=-1; // 아이디가 존재하지 않으면 -1
+			}
+			
+		}catch(SQLException e) {
+			System.out.println("SQL 에러  " +e.getMessage());
+		}finally {
+			closeAll();
+		}
+		return result;
+	}
+	
+	public int join(User user) {
+		int result = -1; // 회원가입 실패
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("insert into user values(?, ?, ?, ?, ?)");
+			
+			pstmt.setString(1, user.getUserID());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getUserAdd());
+			pstmt.setString(5, user.getUserTel());
+			
+			
+			result=pstmt.executeUpdate(); // 1이 return, 회원가입 성공
+			
+		}catch(SQLException e) {
+			System.out.println("SQL 에러" + e.getMessage());
+		}finally {
+			closeAll();
+		}
+		
+		return result;
+		
+		}
 	
 	private void closeAll() {
 		// DB 연결 객체들을 닫는 과정은 필요함(용량문제로 인해) - 모든 메소드에 DB연결할 때마다 닫아줘야함

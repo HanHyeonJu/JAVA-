@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -79,8 +78,7 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("userID", userID);
 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-				dispatcher.forward(request, response);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			} else if (result == 0) {
 				request.setAttribute("userID", userID); // 패스워드만 틀린 경우이기 때문에 userID는 보이도록 남겨줌
 				request.setAttribute("message", "0");

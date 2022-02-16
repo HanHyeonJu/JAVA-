@@ -7,6 +7,8 @@ public class Farmer {
 	private String farmAdd;
 	private String farmTel;
 	
+	public Farmer(){}
+	
 	public String getFarmID() {
 		return farmID;
 	}
