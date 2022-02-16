@@ -56,7 +56,7 @@ public class JoinController extends HttpServlet {
 			String password = request.getParameter("userPassword");
 			String repassword = request.getParameter("userPassword2");
 
-			if (password != repassword) {
+			if (!password.equals(repassword)) {
 				request.setAttribute("message", "p");
 				request.getRequestDispatcher("join/join.jsp").forward(request, response);
 			} else {
