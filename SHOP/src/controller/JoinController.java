@@ -63,7 +63,7 @@ public class JoinController extends HttpServlet {
 				int result = userDao.join(user);
 
 				if (result == 1) {
-					request.setAttribute("message", "r1"); // 회원가입 성공
+					System.out.println("회원가입 성공"); // 회원가입 성공
 
 					RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 					dispatcher.forward(request, response);

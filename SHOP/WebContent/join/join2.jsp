@@ -25,7 +25,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: gray">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="<%=request.getContextPath()%>/main.jsp">홈페이지</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -82,10 +82,6 @@
 	} else if (message == "p") {
 		out.println("<script>");
 		out.println("alert('비밀번호가 다르게 입력되었습니다')");
-		out.println("</script>");
-	} else if (message == "r1") {
-		out.println("<script>");
-		out.println("alert('회원가입에 성공했습니다')");
 		out.println("</script>");
 	} else if (message == "r-1") {
 		out.println("<script>");

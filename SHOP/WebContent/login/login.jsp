@@ -26,7 +26,7 @@
 	
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: gray">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="<%=request.getContextPath()%>/main.jsp">홈페이지</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -35,8 +35,6 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="main.jsp">메인</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">농산품</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">리뷰</a></li>
 			</ul>
@@ -103,14 +101,61 @@
             </div>
             <div class="form-group mt-3">
               <button type="submit" class="btn btn-outline-danger">로그인</button>
-			  <a class="btn btn-primary me-2" href="login2.jsp" role="button"> 농민 로그인</a>
-			  <a class="btn btn-success" href="#" role="button">카카오 로그인</a>
-			  
-            </div>
+			  			<a class="btn btn-outline-success me-2" href="login2.jsp" role="button"> 농민 로그인</a>
+				 			<a id="custom-login-btn" href="javascript:loginWithKakao()"> 
+			  			<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="180" alt="카카오 로그인 버튼" /></a></div>
           </form>
         </div>
       </div>
     </div>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+  Kakao.init('e4ff133a3e61bfceedb984e0e50fc6e5');
+  //console.log(Kakao.inInitialized());
+
+  function loginWithKakao() {
+    Kakao.Auth.login({
+      success: function(authObj) {
+        console.log(authObj); // access 토큰 값
+				Kakao.Auth.setAccessToken(authObj.access_token); // access 토큰값 저장
+
+				getInfo(); // 저장된 토큰값을 사용자 정보로 가져올 함수
+      },
+      fail: function(err) {
+        console.log(err); // 로그인에 실패할 경우(?)
+      },
+    })
+  }
+
+	function getInfo(){
+		 Kakao.API.request({
+        url: '/v2/user/me',
+        success: function(res) {
+          var email = res.kakao_account.email;
+					
+					sendID(email);
+        },
+        fail: function(error) {
+          alert(
+            '카카오 로그인에 실패했습니다' +
+              JSON.stringify(error)
+          );
+        }
+      });
+	}
+
+	const request = new XMLHttpRequest();
+
+	function sendID(email){
+		url = 'KakaoController?val=' + email;
+		request.open('post', url, true);
+		request.send();
+		console.log(request.responseText);
+	}
+	
+</script>
 </body>
 </html>

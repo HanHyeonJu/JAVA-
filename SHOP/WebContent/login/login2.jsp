@@ -24,7 +24,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: gray">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="<%=request.getContextPath()%>/main.jsp">홈페이지</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -33,8 +33,6 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="main.jsp">메인</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">농산품</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">리뷰</a></li>
 			</ul>
@@ -100,7 +98,7 @@
             </div>
             <div class="form-group mt-3">
               <button type="submit" class="btn btn-outline-danger">로그인</button>
-              <a class="btn btn-primary me-2" href="login.jsp" role="button"> 고객 로그인</a>
+              <a class="btn btn-outline-primary me-2" href="login.jsp" role="button"> 고객 로그인</a>
 			  <a class="btn btn-success" href="#" role="button">카카오 로그인</a>
             </div>
           </form>
