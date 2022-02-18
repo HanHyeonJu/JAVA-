@@ -6,10 +6,11 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-<% 
+	<% 
 		// 로그인 한 경우에 세션에 저장된 유저아이디를 가지고 옴
 		String userID = null;
 		if(session.getAttribute("userID") != null){
@@ -110,7 +111,7 @@
     </div>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 
 <script type="text/javascript">
   Kakao.init('e4ff133a3e61bfceedb984e0e50fc6e5');
@@ -136,7 +137,7 @@
         success: function(res) {
           var email = res.kakao_account.email;
 					
-					sendID(email);
+		  sendID(email);
         },
         fail: function(error) {
           alert(
@@ -150,10 +151,16 @@
 	const request = new XMLHttpRequest();
 
 	function sendID(email){
-		url = 'KakaoController?val=' + email;
-		request.open('post', url, true);
-		request.send();
-		console.log(request.responseText);
+	$.ajax({
+		type: 'get',
+		url: '<%=request.getContextPath()%>/KakaoController?val=' + email,
+		success: function(data){
+			console.log('성공');
+		},
+		error: function(data){
+			console.log('실패');
+		}
+	});	
 	}
 	
 </script>

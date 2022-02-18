@@ -96,6 +96,28 @@ public class UserDAO {
 		
 		}
 	
+	public int KakaoSave(User user) {
+		int result = -1;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("insert into user(userID) values(?)");
+			
+			pstmt.setString(1, user.getUserID());
+		
+			result=pstmt.executeUpdate(); // 1이 return, 회원가입 성공
+			
+			}catch(SQLException e) {
+				System.out.println("SQL 에러" + e.getMessage());
+			}finally {
+				closeAll();
+			}
+			
+			return result;
+		
+		}
+	
+	
 	private void closeAll() {
 		// DB 연결 객체들을 닫는 과정은 필요함(용량문제로 인해) - 모든 메소드에 DB연결할 때마다 닫아줘야함
 		try {
