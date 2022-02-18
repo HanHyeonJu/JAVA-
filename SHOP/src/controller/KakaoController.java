@@ -37,6 +37,8 @@ public class KakaoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		PrintWriter out = response.getWriter();
+		
 		String userID = request.getParameter("val");
 	
 		int exist = userDao.existID(userID); // 결과가 존재하지 않는다면 -1, 존재한다면 1이 exist로 return
@@ -45,7 +47,7 @@ public class KakaoController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("userID", userID);
 			
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+			out.print("1");
 		} else {
 			
 			User user = new User();
@@ -54,20 +56,21 @@ public class KakaoController extends HttpServlet {
 			int save = userDao.KakaoSave(user);
 			
 			if(save == 1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("userID", userID);
-		
-				request.getRequestDispatcher("update/userUpdate.jsp").forward(request, response);
+			
+			HttpSession session = request.getSession(); 
+			session.setAttribute("userID",userID); 
+			System.out.println(userID);
+			out.print("0");
+			//response.sendRedirect("update/userUpdate.jsp");
 			} else {
 				System.out.println("카카오 로그인 실패");
-				
-				request.getRequestDispatcher("login/login.jsp").forward(request, response);
+				out.print("-1");
 			}
 			
 		}
 		
-		PrintWriter out = response.getWriter();
-		out.println("성공");
+		
+		
 	}
 
 }

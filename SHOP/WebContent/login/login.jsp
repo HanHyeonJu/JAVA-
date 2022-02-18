@@ -155,7 +155,15 @@
 		type: 'get',
 		url: '<%=request.getContextPath()%>/KakaoController?val=' + email,
 		success: function(data){
-			console.log('성공');
+			console.log(data);
+			if(data == "1"){
+				location.href="../main.jsp";
+			} else if(data == "0"){
+				location.href="../update/userUpdate.jsp";
+			} else if(data == "-1"){
+				location.href="login.jsp";
+			}
+			
 		},
 		error: function(data){
 			console.log('실패');

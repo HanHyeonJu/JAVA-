@@ -53,6 +53,8 @@ public class UserDAO {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement("select userID from user where userID=?");
+			System.out.println(userID);
+			
 			pstmt.setString(1, userID);
 			rs=pstmt.executeQuery();
 			
@@ -102,6 +104,7 @@ public class UserDAO {
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement("insert into user(userID) values(?)");
+			System.out.println(user.getUserID());
 			
 			pstmt.setString(1, user.getUserID());
 		
@@ -114,7 +117,6 @@ public class UserDAO {
 			}
 			
 			return result;
-		
 		}
 	
 	
