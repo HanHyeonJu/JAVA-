@@ -11,9 +11,9 @@
 <body>
 <% 
 		// 로그인 한 경우에 세션에 저장된 유저아이디를 가지고 옴
-		String userID = null;
-		if(session.getAttribute("userID") != null){
-			userID = (String)session.getAttribute("userID");
+		String farmID = null;
+		if(session.getAttribute("farmID") != null){
+			farmID = (String)session.getAttribute("farmID");
 		}
 	%>
 	
@@ -37,11 +37,11 @@
 				<button class="btn btn-secondary me-2" type="submit">Search</button>
 			</form>
 			<%
-					if(userID == null){
+					if(farmID == null){
 			%>
 			<ul class="navbar-nav mb-2 mb-lg-0">
-			<li class="nav-item"><a class="btn btn-primary me-2" href="login/login.jsp" role="button">로그인</a></li>
-			<li class="nav-item"><a class="btn btn-success me-2" href="join/join.jsp" role="button">회원가입</a></li>
+			<li class="nav-item"><a class="btn btn-primary me-2" href="login/login2.jsp" role="button">로그인</a></li>
+			<li class="nav-item"><a class="btn btn-success me-2" href="join/join2.jsp" role="button">회원가입</a></li>
 			</ul>
 			<%
 					}else{
@@ -53,9 +53,7 @@
 					aria-expanded="false"> 마이 페이지</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></li>
-						<li><a class="dropdown-item" href="#">장바구니</a></li>
-						<li><a class="dropdown-item" href="#">주문조회</a></li>
-						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/userPassword.jsp">고객정보수정</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/farmerPassword.jsp">농민정보수정</a></li>
 					</ul>
 				</li>
 			</ul>

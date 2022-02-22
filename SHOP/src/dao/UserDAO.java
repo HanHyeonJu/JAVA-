@@ -119,6 +119,31 @@ public class UserDAO {
 			return result;
 		}
 	
+	public boolean userupdate(User user) {
+		
+		boolean update = false;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("update user set userPassword = ?, userName = ?, userAdd = ?, userTel = ? where userID = ?");
+			
+			pstmt.setString(1, user.getUserPassword());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setString(3, user.getUserAdd());
+			pstmt.setString(4, user.getUserTel());
+			pstmt.setString(5, user.getUserID());
+			
+			update = pstmt.executeUpdate() > 0; // update가 0보다 크면 true
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 에러" + e.getMessage());
+		}finally {
+			closeAll();
+		}
+		
+		return update;
+		
+	}
 	
 	private void closeAll() {
 		// DB 연결 객체들을 닫는 과정은 필요함(용량문제로 인해) - 모든 메소드에 DB연결할 때마다 닫아줘야함

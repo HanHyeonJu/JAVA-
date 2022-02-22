@@ -97,6 +97,53 @@ public class FarmerDAO {
 		
 		}
 	
+	public int KakaoSave(Farmer farmer) {
+		int result = -1;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("insert into farmer(farmID) values(?)");
+			System.out.println(farmer.getFarmID());
+			
+			pstmt.setString(1, farmer.getFarmID());
+		
+			result=pstmt.executeUpdate(); // 1이 return, 회원가입 성공
+			
+			}catch(SQLException e) {
+				System.out.println("SQL 에러" + e.getMessage());
+			}finally {
+				closeAll();
+			}
+			
+			return result;
+		}
+	
+	public boolean farmerupdate(Farmer farmer) {
+		
+		boolean update = false;
+		
+		try {
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("update farmer set farmPassword = ?, farmName = ?, farmAdd = ?, farmTel = ? where farmID = ?");
+			
+			pstmt.setString(1, farmer.getFarmPassword());
+			pstmt.setString(2, farmer.getFarmName());
+			pstmt.setString(3, farmer.getFarmAdd());
+			pstmt.setString(4, farmer.getFarmTel());
+			pstmt.setString(5, farmer.getFarmID());
+			
+			update = pstmt.executeUpdate() > 0; // update가 0보다 크면 true
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 에러" + e.getMessage());
+		}finally {
+			closeAll();
+		}
+		
+		return update;
+		
+	}
+	
 	private void closeAll() {
 		// DB 연결 객체들을 닫는 과정은 필요함(용량문제로 인해) - 모든 메소드에 DB연결할 때마다 닫아줘야함
 		try {
