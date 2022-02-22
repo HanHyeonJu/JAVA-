@@ -63,7 +63,7 @@
 						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></li>
 						<li><a class="dropdown-item" href="#">장바구니</a></li>
 						<li><a class="dropdown-item" href="#">주문조회</a></li>
-						<li><a class="dropdown-item" href="#">고객정보수정</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/userPassword.jsp">고객정보수정</a></li>
 					</ul>
 				</li>
 			</ul>
