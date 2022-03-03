@@ -108,9 +108,9 @@
 							type="text" class="form-control mb-3" name="farmAdd"
 							placeholder="주소" maxlength="50" required> <input
 							type="text" class="form-control mb-3 mt-3" name="farmTel"
-							placeholder="전화번호" maxlength="20" required> <input
-							type="submit" class="btn btn-dark form-control mb-3" value="가입하기"
-							onclick="test()">
+							placeholder="전화번호" maxlength="20" required> 
+							<input
+							type="submit" class="btn btn-dark form-control mb-3" value="가입하기">
 					</form>
 				</div>
 			</div>

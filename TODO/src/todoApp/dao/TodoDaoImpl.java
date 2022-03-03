@@ -43,10 +43,10 @@ public class TodoDaoImpl implements TodoDao{
 		
 		Todo todo = null;
 		
-		Connection conn = JDBCUtils.getConnection();
 		
 		String SELECT_TODO_BY_ID = "SELECT id,title,username,description,target_date,is_done FROM todos WHERE id = ?";
 		try {
+			Connection conn = JDBCUtils.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SELECT_TODO_BY_ID);
 			pstmt.setLong(1, todoId);
 			
@@ -74,11 +74,10 @@ public class TodoDaoImpl implements TodoDao{
 	public List<Todo> selectAllTodos() {
 		
 		List<Todo> todos = new ArrayList<>(); //빈 리스트를 생성
-
-		Connection conn = JDBCUtils.getConnection();
 		
 		String SELECT_ALL_TODOS = "SELECT * FROM todos"; //todos테이블 전체 검색
 		try {
+			Connection conn = JDBCUtils.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(SELECT_ALL_TODOS);
 			
 			ResultSet rs = pstmt.executeQuery(); // 쿼리 실행후 결과 저장

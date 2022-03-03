@@ -15,9 +15,9 @@ public class LoginDao {
 	public boolean validate(LoginBean loginBean) {
 		boolean status = false; // DB에 체크해서 없으면 false
 		
-		Connection conn = JDBCUtils.getConnection(); // DB연결
 		String sql = "select * from users where userName = ? and password = ?";
 		try {
+			Connection conn = JDBCUtils.getConnection(); // DB연결
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, loginBean.getUsername());
 			pstmt.setString(2, loginBean.getPassword()); // sql 준비 긑

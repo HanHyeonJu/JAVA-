@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+//import java.io.PrintWriter;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -45,8 +46,10 @@ public class JoinController extends HttpServlet {
 		user.setUserName(request.getParameter("userName"));
 		user.setUserAdd(request.getParameter("userAdd"));
 		user.setUserTel(request.getParameter("userTel"));
-
+		
+		//PrintWriter out = response.getWriter();
 		int exist = userDao.existID(request.getParameter("userID")); // dao의 메소드를 이용해 userID가 중복인지 확인
+		
 
 		if (exist == 1) {
 			request.setAttribute("message", "e1"); // 아이디 중복 메시지 출력

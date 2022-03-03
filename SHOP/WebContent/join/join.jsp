@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
-    <title>Insert title here</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css" />
+<!--   <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+  <title>Insert title here</title>
   </head>
   <body>
    <%
@@ -77,20 +78,21 @@
 
    <%
 		String message = (String) request.getAttribute("message");
-
-	if (message == "e1") {
-		out.println("<script>");
-		out.println("alert('존재하는 아이디입니다')");
-		out.println("</script>");
-	} else if (message == "p") {
-		out.println("<script>");
-		out.println("alert('비밀번호가 다르게 입력되었습니다')");
-		out.println("</script>");
-	} else if (message == "r-1") {
-		out.println("<script>");
-		out.println("alert('회원가입에 실패했습니다')");
-		out.println("</script>");
-	}
+   		
+   		if(message == "e1"){
+   			out.println("<script>");
+			out.println("alert('존재하는 아이디입니다')");
+			out.println("</script>");
+   		}
+   		else if (message == "p") {
+			out.println("<script>");
+			out.println("alert('비밀번호가 다르게 입력되었습니다')");
+			out.println("</script>");
+		} else if (message == "r-1") {
+			out.println("<script>");
+			out.println("alert('회원가입에 실패했습니다')");
+			out.println("</script>");
+		}
 	%>
 
     <div class="container">
@@ -99,7 +101,8 @@
           <div class="bg-light p-5 mt-5">
             <form action="<%=request.getContextPath()%>/JoinController" method="post">
               <h3 class="text-center mb-3">회원가입</h3>
-              <input type="text" class="form-control mb-3" name="userID" placeholder="아이디" maxlength="20" required />
+              <input type="text" class="form-control mb-3" id="input_id" name="userID" placeholder="아이디" maxlength="20" required />
+              <!-- <font id = "checkID" size="2"></font> -->
               <input type="password" class="form-control mb-3" name="userPassword" placeholder="패스워드" maxlength="20" required />
               <input type="password" class="form-control mb-3" name="userPassword2" placeholder="패스워드 확인" maxlength="20" required />
               <input type="text" class="form-control mb-3" name="userName" placeholder="이름" maxlength="20" required />
@@ -113,5 +116,29 @@
     </div>
 
     <script src="<%=request.getContextPath()%>/js/bootstrap.bundle.min.js"></script>
+    <!-- <script>
+    	$('#input_id').focusout(function(){
+    		let userID = $('#input_id').val(); // input에 입력된 id 값
+    		
+    		$.ajax({
+    			url : "CheckID",
+    			type : "post",
+    			data : {userID: userID},
+    			dataType : 'json',
+    			success : function(result){
+    				if(result == 0){
+    					$("#checkID").html('사용할 수 없는 아이디입니다.');				
+    					$("#checkID").attr('color','red');				
+    				} else{
+    					$("#checkID").html('사용할 수 있는 아이디입니다.');				
+    					$("#checkID").attr('color','green');
+    				}
+    			},
+    			error : function(){
+    				alert("요청실패");
+    			}
+    		})
+    	})
+    </script> -->
   </body>
 </html>

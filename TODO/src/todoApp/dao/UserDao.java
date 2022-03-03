@@ -2,36 +2,170 @@ package todoApp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import todoApp.JDBCUtils;
 import todoApp.model.User;
+import todoApp.JDBCUtils;
 
-// DAO는 DB에 연결해 데이터를 조작하는 클래스
+// DAO 는 DB에 연결해 데이터를 조작하는 클래스
 public class UserDao {
-	// 유저 입력 => DB에 유저데이터를 입력
-	public int registerUser(User user) { // 결과가 true면 1 return 아니면 0 이하
-		String INSERT_USER_SQL = "INSERT INTO users(firstName, lastName, userName, password)"
-				+ "values(?,?,?,?);";
+	
+	//유저 입력 => DB에 유저데이터를 입력
+	public int registerUser(User user) { //결과가 성공이면 1리턴 아니면 0이하
+		String INSERT_USER_SQL = "INSERT INTO users(firstName,lastName,userName,password) "
+				+ "VALUES (?,?,?,?)";
 		
 		int result = 0;
 		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection conn = JDBCUtils.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(INSERT_USER_SQL);
+			conn = JDBCUtils.getConnection();
+			pstmt = conn.prepareStatement(INSERT_USER_SQL);
 			pstmt.setString(1, user.getFirstName());
 			pstmt.setString(2, user.getLastName());
 			pstmt.setString(3, user.getUserName());
 			pstmt.setString(4, user.getPassword()); // pstmt 준비 완료
 			
-			result = pstmt.executeUpdate(); // 결과가 없는 업데이트, 삭제, 입력, 등은 쿼리 업데이트
-			// 입력하는 것은 결과가 나오지는 않고 한 줄이 입력되었다고 표시만 되기 때문에 결과가 없다고 봄(= 그렇게 입력된 줄의 갯수가 리턴됨)
+			result = pstmt.executeUpdate(); //결과가 없는 업데이트,삭제,입력 등은 쿼리 업데이트 한 줄의 갯수가 리턴됨
 			
 		} catch (SQLException e) {
 			System.out.println("SQL 입력 에러");
+		} finally {
+			JDBCUtils.close(conn, pstmt);
 		}
-		
-		// 정상적으로 update가 됬으면 result가 영향을 받았으니 1이 되었을거니까 1이면 true이다.
 		return result;
-	}
-}
+	} // registerUser
+	
+	
+	public User getUserByUserName(String userName) {
+		User user = null;
+		
+		String sql = "SELECT * FROM users WHERE userName = ? ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userName);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				user = new User();
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setUserName(rs.getString("userName"));
+				user.setPassword(rs.getString("password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt, rs);
+		}
+		return user;
+	} // getUserByUserName
+	
+	
+	public List<User> getAllUsers() {
+		List<User> userList = new ArrayList<User>();
+		
+		String sql = "SELECT * FROM users ORDER BY userName ASC ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				User user = new User();
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setUserName(rs.getString("userName"));
+				user.setPassword(rs.getString("password"));
+				
+				userList.add(user);
+			} // while
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt, rs);
+		}
+		return userList;
+	} // getAllUsers
+	
+	
+	public void update(User user) {
+		
+		String sql = "";
+		sql += " UPDATE users ";
+		sql += " SET firstName = ?, lastName = ? ";
+		sql += " WHERE userName = ? ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getFirstName());
+			pstmt.setString(2, user.getLastName());
+			pstmt.setString(3, user.getUserName());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+	} // update
+	
+	public void delete(String userName) {
+		
+		String sql = "DELETE FROM users WHERE userName=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userName);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+	} // update
+	
+	
+	
+	
+	
+	
+} // class UserDao
+
+
+
+
+
+

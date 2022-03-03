@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% 
+	<% 
 		// 로그인 한 경우에 세션에 저장된 유저아이디를 가지고 옴
 		String userID = null;
 		if(session.getAttribute("userID") != null){
