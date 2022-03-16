@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_user_logout"
+            android:title="로그아웃"
+            android:icon="@android:drawable/ic_lock_power_off" />
+
+        <item
+            android:id="@+id/menu_user_info"
+            android:title="내 정보 조회"
+            android:icon="@android:drawable/ic_menu_info_details" />
+
+        <item
+            android:id="@+id/menu_user_modify_pwd"
+            android:title="내 비밀번호 수정"
+            android:icon="@android:drawable/ic_lock_lock" />
+
+        <item
+            android:id="@+id/menu_user_modify"
+            android:title="내 정보 수정"
+            android:icon="@android:drawable/ic_menu_edit" />
+
+        <item
+            android:id="@+id/menu_user_remove"
+            android:title="회원탈퇴"
+            android:icon="@android:drawable/ic_menu_delete" />
+    </group>
+</menu>

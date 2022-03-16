@@ -120,7 +120,6 @@ public class UserDAO {
 		}
 	
 	public boolean userupdate(User user) {
-		
 		boolean update = false;
 		
 		try {

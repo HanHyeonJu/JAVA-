@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import = "dao.ReviewDao"%>   
+<%@ page import = "dao.ReviewDAO"%>   
 <%@ page import = "dao.UserDAO"%>   
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">

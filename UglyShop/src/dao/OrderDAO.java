@@ -11,16 +11,15 @@ import javax.sql.DataSource;
 
 import beans.Farmer;
 import beans.Order;
-import beans.Product;
 import beans.User;
 
-public class OrderDao {
+public class OrderDAO {
 	private DataSource dataSource; // jdbc/shop 커넥션 풀 연결 객체
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	public OrderDao(DataSource dataSource) {
+	public OrderDAO(DataSource dataSource) {
 		this.dataSource = dataSource; // 객체 생성시 커넥션 풀 daraSource를 입력
 	}
 
@@ -45,12 +44,7 @@ public class OrderDao {
 				order.setProdName(rs.getString("prodName"));
 				order.setProdPrice(rs.getInt("prodPrice"));
 				order.setOrderQuantity(rs.getInt("orderQuantity"));
-				order.setProdQuantity(rs.getInt("prodQuantity"));
-				order.setTotalPrice(rs.getInt("totalPrice"));
 				order.setFarmID(rs.getString("farmID"));
-				order.setFarmTel(rs.getString("farmTel"));
-				order.setFarmCheck(rs.getBoolean("farmCheck"));
-				order.setTrackNum(rs.getInt("trackNum"));
 				order.setIs_status( rs.getString("is_status"));
 				
 				ordersList.add(order);
@@ -68,22 +62,20 @@ public class OrderDao {
 	
 	
 	// userID로 검색하기. 리퀘에 없는 나머지 정보들을.
-	public User findByUserId(String userId) {
-		User user = null;
+	public Order findByUserId(String userID) {
+		Order order = null;
 		
 		try {
 			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement("select * from user where userId=?");
-			pstmt.setString(1, userId);
+			pstmt = conn.prepareStatement("select userName,userAdd,userTel from orders where userID=?");
+			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				user = new User();
-				user.setUserID(rs.getString("userID"));
-				user.setUserPassword(rs.getString("userPassword"));
-				user.setUserName(rs.getString("userName"));
-				user.setUserAdd(rs.getString("userAdd"));
-				user.setUserTel(rs.getString("userTel"));
+				order = new Order();
+				order.setUserName(rs.getString("userName"));
+				order.setUserAdd(rs.getString("userAdd"));
+				order.setUserTel(rs.getString("userTel"));
 			}
 			
 			}catch (SQLException e) {
@@ -94,8 +86,7 @@ public class OrderDao {
 				closeAll();	
 			}
 			
-			return user;
-		
+			return order;
 			
 		}
 	
@@ -139,25 +130,15 @@ public class OrderDao {
 		
 		try {
 			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement("insert into order (orderID, cartID, userID, userAdd, userTel, prodName, prodPrice, orderQuantity, prodQuantity, totalPrice, farmID, farmTel, farmCheck, trackNum, is_status"
-					+ ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			pstmt = conn.prepareStatement("insert into orders (userID, prodID, prodName, prodPrice, orderQuantity, farmID, is_status) values (?,?,?,?,?,?,?)");
 			
-			pstmt.setInt(1, order.getOrderID());
-			pstmt.setInt(2, order.getCartID());
-			pstmt.setString(3, order.getUserID());
-			pstmt.setString(4, order.getUserAdd());
-			pstmt.setString(5, order.getUserTel());
-			pstmt.setInt(6, order.getProdID());
-			pstmt.setString(7, order.getProdName());
-			pstmt.setInt(8, order.getProdPrice());
-			pstmt.setInt(9, order.getOrderQuantity());
-			pstmt.setInt(10, order.getProdQuantity());
-			pstmt.setInt(11, order.getTotalPrice());
-			pstmt.setString(12, order.getFarmID());
-			pstmt.setString(13, order.getFarmTel());
-			pstmt.setBoolean(14, order.getFarmCheck());
-			pstmt.setInt(15, order.getTrackNum());
-			pstmt.setString(16, order.getIs_status());
+			pstmt.setString(1, order.getUserID());
+			pstmt.setInt(2, order.getProdID());
+			pstmt.setString(3, order.getProdName());
+			pstmt.setInt(4, order.getProdPrice());
+			pstmt.setInt(5, order.getOrderQuantity());
+			pstmt.setString(6, order.getFarmID());
+			pstmt.setString(7, "배송요청");
 
 			rowAffected = pstmt.executeUpdate() > 0;
 
@@ -173,7 +154,32 @@ public class OrderDao {
 	}
 	
 	
-	
+	public boolean userSave(Order order) {
+		boolean update = false;
+		
+		try {
+			conn = dataSource.getConnection();
+				pstmt = conn.prepareStatement("set sql_safe_updates=0");
+				pstmt.executeQuery();
+				pstmt.close();
+				
+				conn = dataSource.getConnection();
+				pstmt = 
+				conn.prepareStatement
+				("update orders o inner join user u on u.userID = o.userID set o.userName = u.userName, o.userAdd = u.userAdd, o.userTel = u.userTel where o.userID = ?");
+				pstmt.setString(1, order.getUserID());
+				
+				update = pstmt.executeUpdate() > 0; // update가 0보다 크면 true
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 에러" + e.getMessage());
+		}finally {
+			closeAll();
+		}
+		
+		return update;
+		
+	}
 	
 	private void closeAll() {
 		try {

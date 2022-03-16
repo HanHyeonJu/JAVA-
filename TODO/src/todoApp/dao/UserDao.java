@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import todoApp.model.Todo;
 import todoApp.model.User;
-import todoApp.JDBCUtils;
+import todoApp.utils.JDBCUtils;
 
 // DAO 는 DB에 연결해 데이터를 조작하는 클래스
 public class UserDao {
@@ -107,6 +109,60 @@ public class UserDao {
 		return userList;
 	} // getAllUsers
 	
+	// 외부 조인해서 가져오기
+	public User getUserAndTodos(String userName) {
+		User user = null;
+		List<Todo> todoList = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "";
+		sql += " SELECT u.userName, u.firstName, u.lastName, u.Password, ";
+		sql += "        t.id, t.title, t.description, t.is_done, t.target_date ";
+		sql += " from users u left outer join todos t ";
+		sql += " ON u.userName = t.userName ";
+		sql += " WHERE u.userName=? ";
+		sql += " ORDER BY target_date DESC ";
+		
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			pstmt.setString(1, userName);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Todo todo = new Todo();
+				todo.setId(rs.getLong("id"));
+				todo.setTitle(rs.getString("title"));
+				todo.setDescription(rs.getString("description"));
+				todo.setTargetDate(rs.getDate("target_date").toLocalDate());
+				todo.setStatus(rs.getBoolean("is_done"));
+				
+				todoList.add(todo);
+			}
+			
+			if(rs.last()) {
+				user = new User();
+				user.setUserName(rs.getString("userName"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setPassword(rs.getString("password"));
+				
+				user.setTodoList(todoList);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt, rs);
+		}
+		
+		return user;
+	} // getUserAndTodos
+	
 	
 	public void update(User user) {
 		
@@ -135,9 +191,11 @@ public class UserDao {
 		}
 	} // update
 	
+	
+	
 	public void delete(String userName) {
 		
-		String sql = "DELETE FROM users WHERE userName=?";
+		String sql = "DELETE FROM users WHERE userName = ? ";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -155,12 +213,41 @@ public class UserDao {
 		} finally {
 			JDBCUtils.close(conn, pstmt);
 		}
-	} // update
+	} // delete
 	
 	
-	
-	
-	
+	public static void main(String[] args) {
+		UserDao userDao = new UserDao();
+		User user = userDao.getUserAndTodos("hong");
+		
+		System.out.println(user);
+	}
+
+
+	public void updatePasswordById(String pwd, String id) {
+		String sql = "";
+		sql += " UPDATE users ";
+		sql += " SET password = ? ";
+		sql += " WHERE userName = ? ";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = JDBCUtils.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, pstmt);
+		}
+	}
 	
 } // class UserDao
 

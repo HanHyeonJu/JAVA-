@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-
 import beans.User;
 import dao.UserDAO;
 
-@WebServlet("/userUpdate")
+@WebServlet("/UpdateUser")
 public class UpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -78,10 +78,20 @@ public class UpdateController extends HttpServlet {
 			user.setUserAdd(request.getParameter("userAdd"));
 			user.setUserTel(request.getParameter("userTel"));
 
-			boolean update = userDao.userupdate(user);
+			String password = request.getParameter("userPassword");
+			String repassword = request.getParameter("userPassword2");
 
-			if (update) {
-				request.getRequestDispatcher("update/updateSuccess.jsp").forward(request, response);
+			if (!password.equals(repassword)) {
+				request.setAttribute("message", "p");
+				request.getRequestDispatcher("update/userUpdate.jsp").forward(request, response);
+			} else {
+				boolean update = userDao.userupdate(user);
+
+				if (update) {
+					request.setAttribute("user", user);
+					RequestDispatcher rd = request.getRequestDispatcher("update/updateSuccess.jsp");
+					rd.forward(request, response);
+				}
 			}
 
 		}

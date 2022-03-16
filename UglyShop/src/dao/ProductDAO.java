@@ -12,13 +12,13 @@ import javax.sql.DataSource;
 import beans.Product;
 
 
-public class ProductDao {
+public class ProductDAO {
 	private DataSource dataSource;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public ProductDao(DataSource datasource) {
+	public ProductDAO(DataSource datasource) {
 		this.dataSource = datasource;
 	}
 	
@@ -37,7 +37,6 @@ public class ProductDao {
 				prod.setFarmID(rs.getString("farmID"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
-				prod.setProdInven(rs.getInt("prodInven"));
 				prod.setProdImg(rs.getString("prodImg"));
 				prod.setProdInfo(rs.getString("prodInfo"));
 				
@@ -67,7 +66,6 @@ public class ProductDao {
 				prod.setFarmID(rs.getString("farmID"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
-				prod.setProdInven(rs.getInt("prodInven"));
 				prod.setProdImg(rs.getString("prodImg"));
 				prod.setProdInfo(rs.getString("prodInfo"));
 			}
@@ -81,15 +79,15 @@ public class ProductDao {
 		return prod;
 	}
 	
-	// 모든 장바구니를 리스트로 리턴
-	public Product findById(int prodId) {
+	// 모든 장바구니에 담긴 상품들을 리스트로 리턴
+	public Product findById(int prodID) {
 			
 		Product prod = null;
 			
 		try {
 			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement("select * from product where prodID=?");
-			pstmt.setInt(1, prodId);
+			pstmt.setInt(1, prodID);
 			rs = pstmt.executeQuery();
 			
 			
@@ -99,7 +97,6 @@ public class ProductDao {
 				prod.setFarmID(rs.getString("farmID"));
 				prod.setProdName(rs.getString("prodName"));
 				prod.setProdPrice(rs.getInt("prodPrice"));
-				prod.setProdInven(rs.getInt("prodInven"));
 				prod.setProdImg(rs.getString("prodImg"));
 				prod.setProdInfo(rs.getString("prodInfo"));
 				

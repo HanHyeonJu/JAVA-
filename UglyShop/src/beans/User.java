@@ -1,5 +1,6 @@
 package beans;
 
+
 public class User {
 	private String userID;
 	private String userPassword;
@@ -37,6 +38,7 @@ public class User {
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
 	}
+	
 	
 	
 }

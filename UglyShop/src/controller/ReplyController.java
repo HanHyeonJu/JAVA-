@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.Reply;
-import dao.ReplyDao;
+import dao.ReplyDAO;
 
 
 @WebServlet("/replyController")
 public class ReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private ReplyDao replyDao;
+	private ReplyDAO replyDao;
 	
 	@Resource(name = "jdbc/shop")
 	private DataSource datasource;
@@ -26,7 +26,7 @@ public class ReplyController extends HttpServlet {
     @Override
 	public void init() throws ServletException {
 		// 서블릿 컨테이터가 서블릿 객체를 생성한 후 맨 처음 딱 한번만 호출되는 메서드. ReplyDao의 datasource를 가져와 replyDao객체에 저장하여 사용
-		replyDao = new ReplyDao(datasource);
+		replyDao = new ReplyDAO(datasource);
 	}
 
 

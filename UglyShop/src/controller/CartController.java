@@ -3,10 +3,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,24 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import dao.ProductDao;
 import beans.Cart;
 import beans.Product;
-import utills.Json;
+import dao.ProductDAO;
 
 @WebServlet("/cart")
 public class CartController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private ProductDao productDao;
+	private ProductDAO productDao;
 
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 
 	@Override
 	public void init() throws ServletException {
-		productDao = new ProductDao(dataSource);
+		productDao = new ProductDAO(dataSource);
 	}
 
 	@Override
@@ -87,11 +84,11 @@ public class CartController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		
 		String id = req.getParameter("id");
-		int prodId = Integer.parseInt(id);
-		Product prod = productDao.findById(prodId);
+		int prodID = Integer.parseInt(id);
+		Product prod = productDao.findById(prodID);
 		HttpSession session = req.getSession();
-		String userId = (String)session.getAttribute("userId");
-		String farmId = req.getParameter("farmId");
+		String userID = (String)session.getAttribute("userID");
+		String farmID = req.getParameter("farmID");
 
 		HashMap<Integer, Cart> cartList = (HashMap<Integer, Cart>) session.getAttribute("cartList");
 
@@ -109,23 +106,23 @@ public class CartController extends HttpServlet {
 		}
 		
 		
-		int qty = cartList.get(prodId).getOrderQuantity();
+		int qty = cartList.get(prodID).getOrderQuantity();
 
 		
 		// 수량 감소
 		if(qty == 1) {
-			System.out.println("prodId : "+prodId);
-			cartList.remove(prodId);
+			System.out.println("prodId : "+prodID);
+			cartList.remove(prodID);
 			
 			if(cartList.size() == 0) {
 				session.removeAttribute("cartList");
 			} else {
-				cartList.put(prodId, new Cart(prodId, prod.getProdName(), prod.getProdPrice(), --qty, userId, farmId));
+				cartList.put(prodID, new Cart(prodID, prod.getProdName(), prod.getProdPrice(), --qty, userID, farmID));
 			}
 			
 			session.setAttribute("cartList", cartList);
 		} else {
-			cartList.put(prodId, new Cart(prodId, prod.getProdName(), prod.getProdPrice(), --qty, userId, farmId));
+			cartList.put(prodID, new Cart(prodID, prod.getProdName(), prod.getProdPrice(), --qty, userID, farmID));
 			session.setAttribute("cartList", cartList);
 		}
 		

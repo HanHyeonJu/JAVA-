@@ -1,5 +1,7 @@
 package beans;
 
+import java.io.Serializable;
+
 public class Cart {
 	private static int num;
 	private int cartID;

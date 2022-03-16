@@ -11,13 +11,13 @@ import javax.sql.DataSource;
 
 import beans.Review;
 
-public class ReviewDao {
+public class ReviewDAO {
 	private DataSource datasource;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-    public ReviewDao(DataSource datasource) {
+    public ReviewDAO(DataSource datasource) {
         this.datasource = datasource;
         // 객체 생성시 커넥션 풀 datasource를 입력
     }

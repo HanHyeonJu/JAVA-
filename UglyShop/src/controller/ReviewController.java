@@ -14,24 +14,24 @@ import javax.sql.DataSource;
 
 import beans.Reply;
 import beans.Review;
-import dao.ReplyDao;
-import dao.ReviewDao;
+import dao.ReplyDAO;
+import dao.ReviewDAO;
 
 
 @WebServlet("/reviewController")
 public class ReviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private ReviewDao reviewDao;
-	private ReplyDao replyDao;
+	private ReviewDAO reviewDao;
+	private ReplyDAO replyDao;
 	
 	@Resource(name = "jdbc/shop")
 	private DataSource datasource;
 	
 	@Override
 	public void init() throws ServletException {
-		reviewDao = new ReviewDao(datasource);
-		replyDao = new ReplyDao(datasource);
+		reviewDao = new ReviewDAO(datasource);
+		replyDao = new ReplyDAO(datasource);
 	}
        
 

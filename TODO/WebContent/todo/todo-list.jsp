@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/style2.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/css/style.css" />
     <title>Todo리스트</title>
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #8FBC8F">
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: coral">
         <div class="container-fluid">
           <a class="navbar-brand" href="<%=request.getContextPath()%>">TODO APP</a>
           <button

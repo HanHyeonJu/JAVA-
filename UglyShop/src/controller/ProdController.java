@@ -13,20 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.Product;
-import dao.ProductDao;
+import dao.ProductDAO;
 
 @WebServlet("/ProdController")
 public class ProdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
-	private ProductDao prodDao;
+	private ProductDAO prodDao;
 	
 	@Resource(name = "jdbc/shop")
 	private DataSource dataSource;
 	
 	@Override
 	public void init() throws ServletException {
-		prodDao = new ProductDao(dataSource);
+		prodDao = new ProductDAO(dataSource);
 	}
     public ProdController() {
         super();

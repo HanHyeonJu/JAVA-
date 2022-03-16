@@ -16,7 +16,7 @@
 <div class="container">
       <div class="row mt-5">
         <div class="col-md-6 mx-auto">
-          <form action="<%=request.getContextPath()%>/farmerUpdate?action=docheck" method="post">
+          <form action="<%=request.getContextPath()%>/UpdateFarm?action=docheck" method="post">
           	<div class="form-group">
             <label for="username">아이디 :</label>
             <input type="text" class="form-control mb-3" name="farmID" placeholder="아이디" value="${farmID}" maxlength="20" required>

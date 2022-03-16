@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="../includes/headerUser3.jsp" />
-    
 <%
 	String message = (String)request.getAttribute("message"); // 메시지의 값을 받아서 값에 맞는 alert창 출력
 	
@@ -17,7 +16,7 @@
 <div class="container">
       <div class="row mt-5">
         <div class="col-md-6 mx-auto">
-          <form action="<%=request.getContextPath()%>/userUpdate?action=docheck" method="post">
+          <form action="<%=request.getContextPath()%>/UpdateUser?action=docheck" method="post">
           	<div class="form-group">
             <label for="username">아이디 :</label>
             <input type="text" class="form-control mb-3" name="userID" placeholder="아이디" value="${userID}" maxlength="20" required>

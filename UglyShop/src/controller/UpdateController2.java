@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import dao.FarmerDAO;
 
 
 
-@WebServlet("/farmerUpdate")
+@WebServlet("/UpdateFarm")
 public class UpdateController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -82,7 +83,9 @@ public class UpdateController2 extends HttpServlet {
 			boolean update = farmerDao.farmerupdate(farmer);
 
 			if (update) {
-				request.getRequestDispatcher("update/farmerSuccess.jsp").forward(request, response);
+				request.setAttribute("farmer", farmer);
+				RequestDispatcher rd = request.getRequestDispatcher("update/farmerSuccess.jsp");
+				rd.forward(request, response);
 			}
 
 		}

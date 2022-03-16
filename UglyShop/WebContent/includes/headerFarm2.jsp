@@ -19,7 +19,7 @@
 				if( farmID != null){
 					out.println("<script>");
 					out.println("alert('이미 로그인이 되었습니다.')");
-					out.println("location.href = main/mainFarm.jsp");
+					out.println("location.href = ../main/mainFarm.jsp");
 					out.println("</script>");
 				} 
 			%>
@@ -59,7 +59,7 @@
 					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> 마이 페이지</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/login/logout.jsp">로그아웃</a></li>
+						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/logoutFarm">로그아웃</a></li>
 						<li><a class="dropdown-item" href="<%=request.getContextPath()%>/update/farmerPassword.jsp">농민정보수정</a></li>
 					</ul>
 				</li>
